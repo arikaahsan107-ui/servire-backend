@@ -1,329 +1,277 @@
-<<<<<<< HEAD
-# Servire Backend Platform API
+🌊 SERVIRE - Backend API
 
-A complete, production-ready backend built using Node.js, Express, and MongoDB. Mirrors the exact workflows expected by the Servire React frontend.
+Production-ready backend for Servire Home Service Platform built with Node.js, Express, and MongoDB.
 
----
+🚀 Overview
 
-## Features
+This backend powers the Servire platform, handling:
 
-- **Authentication System**:
-  - Secure passwords hashing with `bcrypt` (12 rounds).
-  - Short-lived Access Token JWT (15 mins) & long-lived Refresh Token JWT (7 days).
-  - Pre-save security structures for email verification tokens and password resets.
-- **Database Architecture**:
-  - Handled using **Mongoose** and **MongoDB** models.
-  - Complete schemas matching required models: `users`, `workers`, `bookings`, `reviews`, `favorites`, `categories`, `emergency_requests`, `admin_logs`.
-- **Security & Integrity Filters**:
-  - Implements `Helmet` headers, `CORS` origins, rate limits (100 req/min auth, 1000 req/min API), NoSQL query sanitization (`mongo-sanitize`), and XSS protection (`xss-clean`).
-- **Data Validation**:
-  - Request validators written using `Joi` (validates Pakistan mobile formats, rating bounds, future date schedules, and address lengths).
-- **Mock Data Seeding**:
-  - Populates 105 realistic worker records and mock analytics with a simple seed script.
-
----
-
-## Installation & Setup
-
-### 1. Configure Environment Variables
-Copy `.env.example` into a new `.env` file and adjust properties if needed:
-```bash
-cp .env.example .env
-```
-
-### 2. Install Packages
-Navigate to the `backend/` folder and run npm installation:
-```bash
+Authentication (JWT based)
+Users & Workers management
+Bookings system
+Reviews & ratings
+Emergency service requests
+Admin dashboard APIs
+Categories & filtering system
+🧰 Tech Stack
+Node.js
+Express.js
+MongoDB + Mongoose
+JWT Authentication
+bcrypt (password hashing)
+Joi (validation)
+Helmet (security headers)
+CORS
+XSS protection
+mongo-sanitize
+express-rate-limit
+✨ Features
+🔐 Authentication
+User registration & login
+JWT Access Token (15 min)
+Refresh Token (7 days)
+Password hashing (bcrypt 12 rounds)
+Email verification (token-based)
+Password reset system
+👤 Users
+Profile management
+View bookings
+Favorite workers system
+🧑‍🔧 Workers
+Worker profiles
+Search & filter (city, skills, rating, availability)
+Portfolio images
+Verification system
+Availability status
+📦 Bookings
+Create booking
+Cancel booking
+Update booking status (pending / confirmed / completed / cancelled)
+Worker-specific booking history
+⭐ Reviews
+Add review
+Edit review
+Delete review
+Worker rating calculation
+🚨 Emergency System
+Emergency service request
+Nearby worker search
+Worker dispatch system
+Request status tracking
+👑 Admin Panel APIs
+User management
+Worker verification
+Platform statistics
+Analytics (cities, bookings, workers)
+Role management
+📂 Categories
+Service categories list
+Workers by category
+⚙️ Installation & Setup
+1️⃣ Clone Project
+git clone https://github.com/your-username/servire-backend.git
+cd servire-backend
+2️⃣ Install Dependencies
 npm install
-```
+3️⃣ Environment Setup
 
-### 3. Initialize Seeding
-Migrate default records (105 workers, categories, reviews, default admin) into your local MongoDB:
-```bash
+Create .env file:
+
+PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/servire
+JWT_SECRET=your_secret_key
+JWT_REFRESH_SECRET=your_refresh_secret
+4️⃣ Run Seeder (Optional but Recommended)
 npm run seed
-# or
-node src/seeds/runSeed.js
-```
 
-Default Admin credentials:
-- **Email**: `admin@servire.pk`
-- **Password**: `Admin@123`
+Default Admin:
 
-### 4. Boot Up Server
-Start Node server in development hot-reloading mode:
-```bash
-npm run dev
-```
-The server will run on `http://localhost:5000/api`.
-
----
-
-## API Endpoints List
-
-### Authentication (`/api/auth`)
-- `POST /register` — Register a new user/admin.
-- `POST /login` — Authenticate credentials.
-- `POST /logout` — Clear session tokens.
-- `POST /refresh-token` — Request new access token using refresh tokens.
-- `POST /forgot-password` — Generate password reset links in system console logs.
-- `POST /reset-password` — Verify reset tokens and save new password parameters.
-- `GET /verify-email/:token` — Email verification link.
-
-### Users Profile (`/api/users`)
-- `GET /profile` — Fetch profile details.
-- `PUT /profile` — Update details or change passwords.
-- `GET /bookings` — Fetch booking logs linked to user.
-- `GET /favorites` — Fetch list of saved workers.
-- `POST /favorites/:workerId` — Save worker to favorites list.
-- `DELETE /favorites/:workerId` — Remove worker from favorites.
-
-### Workers Directory (`/api/workers`)
-- `GET /` — Search and filter workers list (by text search, city, ratings, skills, verified, availability, sorting limits).
-- `GET /:id` — Details of a worker by numeric ID.
-- `PUT /profile` — Update worker information.
-- `PUT /availability` — Update availability (available/busy).
-- `GET /:id/portfolio` — Fetch portfolio images.
-
-### Bookings (`/api/bookings`)
-- `POST /` — Create booking.
-- `GET /:id` — Details of a booking.
-- `PUT /:id/cancel` — Cancel booking.
-- `PUT /:id/status` — Modify booking status (pending/confirmed/completed/cancelled).
-- `GET /worker/:workerId` — Bookings associated with a worker.
-
-### Reviews (`/api/reviews`)
-- `POST /` — Create worker review.
-- `GET /worker/:workerId` — Worker reviews list.
-- `PUT /:id` — Edit review text or ratings.
-- `DELETE /:id` — Delete review.
-
-### Emergency Dispatch (`/api/emergency`)
-- `POST /request` — Submit emergency request category to start scans.
-- `GET /nearby` — Get nearby available workers.
-- `POST /dispatch/:workerId` — Dispatch worker to request location.
-- `GET /status/:requestId` — Current emergency scan status.
-
-### Admin Tools (`/api/admin`)
-- `GET /stats` — Total users/workers/bookings counts and platform revenue statistics.
-- `GET /analytics/cities` — Worker distribution by cities.
-- `GET /analytics/workers` — Worker stats.
-- `GET /analytics/bookings` — Booking records.
-- `GET /users` — Admin view of all user entries.
-- `PUT /users/:id/role` — Update user permissions (user/admin).
-- `PUT /workers/:id/verify` — Update verification badges.
-- `DELETE /users/:id` — Delete user account.
-
-### Categories (`/api/categories`)
-- `GET /` — List service categories.
-- `GET /:id` — Details of a category.
-- `GET /:id/workers` — List workers of a category.
-=======
-# 🌊 SERVIRE - Home Service Platform
-
-> A complete, production-ready React application connecting verified professionals with customers across Pakistan. Built with React Router, Context API, and modern UI/UX practices.
-
-![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)
-![React Router](https://img.shields.io/badge/React_Router-6.x-CA4245?logo=react-router)
-![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)
-![License](https://img.shields.io/badge/License-MIT-green)
-
-## 🚀 Live Demo
-
-**[View Live Application](https://your-vercel-url.vercel.app)**
-
----
-
-## 📋 Table of Contents
-
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation & Setup](#installation--setup)
-- [Deployment](#deployment)
-- [Assignment Requirements](#assignment-requirements)
-- [What I Learned](#what-i-learned)
-- [Author](#author)
-
----
-
-## 🎯 Project Overview
-
-**Servire** (derived from "Service" + "Fire" - symbolizing passionate service) is a comprehensive home service platform that connects customers with verified professionals including electricians, plumbers, cleaners, AC technicians, carpenters, and many more.
-
-This project was developed as a React assignment demonstrating multi-page application architecture, client-side routing, and dynamic data fetching.
-
----
-
-## ✨ Features
-
-### Core Features (Assignment Requirements)
-| Feature | Status | Description |
-|---------|--------|-------------|
-| Multi-page React App | ✅ | Complete SPA with 12+ routes |
-| React Router Navigation | ✅ | Navbar, Links, Dynamic routes |
-| User List Page | ✅ | Workers directory with 105+ professionals |
-| User Details Page | ✅ | Full profile with portfolio & reviews |
-| Loading States | ✅ | Spinners, Skeleton cards, Shimmer effects |
-| Error States | ✅ | Error boundaries, fallback UI, retry buttons |
-| API Integration | ✅ | Mock API with loading simulation |
-| Deployment | ✅ | Ready for Vercel/Netlify |
-
-### Bonus Features (Exceeded Expectations)
-- 🤖 **Hoori AI Chatbot** - Smart assistant for navigation and FAQs
-- 🌓 **Dark/Light Theme** - Smooth theme switching with localStorage
-- 🚨 **Emergency SOS System** - 24/7 emergency response simulation
-- 💖 **Favorites/Wishlist** - Save and manage favorite professionals
-- 📊 **Smart City Analytics** - Real-time platform statistics dashboard
-- 👑 **Admin Panel** - Employee and worker management
-- 🎨 **Portfolio Gallery** - Masonry layout with before/after slider
-- 📱 **Fully Responsive** - Mobile-first design
-- 🎉 **Confetti & Animations** - Celebratory effects on booking
-
----
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|------------|---------|
-| **React 18** | UI library |
-| **React Router DOM v6** | Navigation & routing |
-| **Context API** | State management (theme, auth, favorites) |
-| **CSS-in-JS** | Dynamic styling with theme variables |
-| **Custom Hooks** | useDebounce, useApp, useTheme |
-| **Error Boundaries** | Graceful error handling |
-
----
-
-## 💻 Installation & Setup
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Steps
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/your-username/servire-app.git
-cd servire-app
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development server
+Email: admin@servire.pk
+Password: Admin@123
+5️⃣ Start Server
 npm run dev
 
-# 4. Build for production
-npm run build
-Dependencies to Install
-bash
-npm install react-router-dom
-main.jsx Setup
-jsx
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+Server runs at:
 
-createRoot(document.getElementById('root')).render(<App />)
-🚀 Deployment
-Deploy to Vercel (Recommended)
-Option 1: Vercel CLI
-
-bash
-npm install -g vercel
-vercel --prod
-Option 2: GitHub + Vercel
-
-Push code to GitHub
-
-Go to vercel.com
-
-Import your repository
-
-Framework preset: Create React App (or Vite)
-
-Build command: npm run build
-
-Output directory: build or dist
-
-Click Deploy
-
-vercel.json (for SPA routing)
-json
-{
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
-Deploy to Netlify
-bash
-npm run build
-# Drag and drop the build folder to Netlify
-📚 Assignment Requirements Checklist
-Part 1 ✅
-Build a React application
-
-Plan the structure of a multi-page React app
-
-Implement basic routing for navigation between pages
-
-Fetch and display user data using API (JSONPlaceholder equivalent)
-
-Create a User List page that displays users
-
-Allow navigation to user details page using React Router
-
-Part 2 & Deploy ✅
-Complete details page
-
-Add loading and error states
-
-Deploy to Vercel 
-
-Share live URL
-
-Write README
-
+http://localhost:5000/api
+📡 API Routes
+Auth
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+POST /api/auth/refresh-token
+POST /api/auth/forgot-password
+POST /api/auth/reset-password
+GET /api/auth/verify-email/:token
+Users
+GET /api/users/profile
+PUT /api/users/profile
+GET /api/users/bookings
+GET /api/users/favorites
+POST /api/users/favorites/:workerId
+DELETE /api/users/favorites/:workerId
+Workers
+GET /api/workers
+GET /api/workers/:id
+PUT /api/workers/profile
+PUT /api/workers/availability
+GET /api/workers/:id/portfolio
+Bookings
+POST /api/bookings
+GET /api/bookings/:id
+PUT /api/bookings/:id/cancel
+PUT /api/bookings/:id/status
+GET /api/bookings/worker/:workerId
+Reviews
+POST /api/reviews
+GET /api/reviews/worker/:workerId
+PUT /api/reviews/:id
+DELETE /api/reviews/:id
+Emergency
+POST /api/emergency/request
+GET /api/emergency/nearby
+POST /api/emergency/dispatch/:workerId
+GET /api/emergency/status/:requestId
+Admin
+GET /api/admin/stats
+GET /api/admin/users
+GET /api/admin/analytics/cities
+GET /api/admin/analytics/workers
+GET /api/admin/analytics/bookings
+PUT /api/admin/users/:id/role
+PUT /api/admin/workers/:id/verify
+DELETE /api/admin/users/:id
+Categories
+GET /api/categories
+GET /api/categories/:id
+GET /api/categories/:id/workers
+🔐 Security Features
+Helmet (secure HTTP headers)
+CORS protection
+Rate limiting
+XSS protection
+Mongo sanitization
+Password hashing (bcrypt)
 🧠 What I Learned
-Technical Skills
-React Router v6: Dynamic routes, nested routes, protected routes, useParams, useNavigate, NavLink
-
-Context API: Global state management for theme, auth, and favorites
-
-Custom Hooks: Created useDebounce for search optimization
-
-Error Handling: Error Boundaries, try-catch patterns, fallback UI
-
-Performance: useCallback, useEffect optimization, debounced search
-
-CSS-in-JS: Dynamic theming with CSS variables
-
-Deployment: Vercel/Netlify configuration for SPA routing
-
-Soft Skills
-Planning multi-page application architecture
-
-Breaking down complex UI into reusable components
-
-Managing state across deeply nested components
-
-Creating smooth user experiences with loading skeletons
-
-Building for production with error resilience
-
+REST API design
+Authentication & authorization (JWT)
+MongoDB schema design
+Middleware architecture in Express
+Security best practices
+Real-world backend structure
 👩‍💻 Author
-name  ARIKA AHSAN
 
+Arika Ahsan
 
-
-GitHub: ARIKA AHSAN
-arikaahsan107-ui
-
-
+GitHub: arikaahsan107-ui
 LinkedIn: ARIKA AHSAN
 
-
 📄 License
-MIT License - feel free to use this project for learning and portfolio purposes.
 
-Made with 🌊 in Pakistan
->>>>>>> 913b4d8d0d7d71ce0d54104316a990ad6587f9ca
-#   s e r v i r e - b a c k e n d  
- 
+MIT License
+
+🌊 Built with Node.js in Pakistan
+
+Agar chaho to main next step mein tumhara:
+✔ backend deploy (Railway/Render)
+✔ frontend connect with backend URL
+✔ env production setup
+✔ Postman collection ready
+
+sab set karwa deta hoon 👍
+
+thora chota or professional likho
+
+Theek hai 👍 main tumhein short + professional backend README de raha hoon — clean, GitHub-ready, no extra fluff.
+
+🌊 Servire Backend API
+
+A secure and scalable backend for the Servire Home Service Platform built with Node.js, Express, and MongoDB.
+
+🚀 Tech Stack
+Node.js
+Express.js
+MongoDB & Mongoose
+JWT Authentication
+bcrypt
+Joi Validation
+Helmet, CORS, XSS Protection
+✨ Features
+🔐 Authentication
+User registration & login
+JWT access & refresh tokens
+Password hashing (bcrypt)
+Email verification & password reset
+👤 Users & Workers
+User profile management
+Worker directory with filters (city, skills, rating, availability)
+Favorites system
+Worker portfolio support
+📦 Bookings
+Create, update, and cancel bookings
+Booking status tracking (pending, confirmed, completed, cancelled)
+⭐ Reviews
+Add, edit, delete reviews
+Worker rating system
+🚨 Emergency System
+Emergency service requests
+Nearby worker detection
+Dispatch & status tracking
+👑 Admin Panel
+Manage users & workers
+Verify workers
+Platform analytics (users, bookings, cities)
+⚙️ Setup
+1. Install Dependencies
+npm install
+2. Environment Variables
+
+Create .env file:
+
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+3. Seed Database (optional)
+npm run seed
+4. Run Server
+npm run dev
+
+Server runs at:
+
+http://localhost:5000/api
+📡 API Endpoints
+Auth
+POST /auth/register
+POST /auth/login
+POST /auth/refresh-token
+Users
+GET /users/profile
+PUT /users/profile
+Workers
+GET /workers
+GET /workers/:id
+Bookings
+POST /bookings
+GET /bookings/:id
+Reviews
+POST /reviews
+GET /reviews/worker/:workerId
+Admin
+GET /admin/stats
+GET /admin/users
+🔐 Security
+JWT Authentication
+Password encryption (bcrypt)
+Rate limiting
+CORS protection
+Input sanitization
+👩‍💻 Author
+
+Arika Ahsan
+
+GitHub: arikaahsan107-ui
+
+🌊 License
+
+MIT
