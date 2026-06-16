@@ -1,0 +1,96 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Servire Backend API Documentation",
+    "description": "Production ready API documentation for Servire Home Services platform in Pakistan",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "description": "Registers user or admin. Sends email verification token in console output log.",
+        "responses": {
+          "201": { "description": "User created successfully" },
+          "400": { "description": "Invalid input or user already exists" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Log in user",
+        "description": "Authenticates user credentials and sends Access and Refresh JWT Tokens.",
+        "responses": {
+          "200": { "description": "Login successful" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/workers": {
+      "get": {
+        "summary": "Search and filter workers list",
+        "description": "Queries profiles matching search terms, skills, ratings, city filters, availability, and pagination.",
+        "responses": {
+          "200": { "description": "Matched workers retrieved" }
+        }
+      }
+    },
+    "/workers/{id}": {
+      "get": {
+        "summary": "Retrieve worker details",
+        "description": "Finds a professional matching their numeric workerId.",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Worker found" },
+          "404": { "description": "Worker not found" }
+        }
+      }
+    },
+    "/bookings": {
+      "post": {
+        "summary": "Create booking",
+        "description": "Registers booking schedules with base prices or emergency fees. Requires Auth Token.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "201": { "description": "Booking scheduled successfully" }
+        }
+      }
+    },
+    "/emergency/request": {
+      "post": {
+        "summary": "Trigger emergency scan",
+        "description": "Registers emergency scans and retrieves nearby available workers matching category skills.",
+        "responses": {
+          "201": { "description": "Scanning started successfully" }
+        }
+      }
+    },
+    "/admin/stats": {
+      "get": {
+        "summary": "Dashboard status summary",
+        "description": "Administrators query user count aggregates, booking status splits, and revenue counts.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Stats fetched" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
