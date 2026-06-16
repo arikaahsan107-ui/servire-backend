@@ -19,6 +19,7 @@
     "helmet": "^7.1.0",
     "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.3.0",
     "mongoose": "^8.4.0",
     "xss-clean": "^0.1.4"
   },
@@ -28,5 +29,17 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "private": true
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arikaahsan107-ui/servire-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/arikaahsan107-ui/servire-backend/issues"
+  },
+  "homepage": "https://github.com/arikaahsan107-ui/servire-backend#readme"
 }
