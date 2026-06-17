@@ -1,14 +1,14 @@
 require("dotenv").config();
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');   // ✅ COMMENT KARO — CORS already src/app.js mein hai
 const connectDB = require("./src/config/db");
 const app = require("./src/app");
 
-// 🔥 CORS Middleware (SAB SE UPAR)
-app.use(cors({
-  origin: '*',
-  credentials: true,
-}));
+// ✅ CORS KO YAHAN SE HATAO (duplicate hai)
+// app.use(cors({
+//   origin: '*',
+//   credentials: true,
+// }));
 
 app.use(express.json());
 

@@ -21,12 +21,19 @@ const app = express();
 // 1. Security HTTP Headers
 app.use(helmet());
 
-// 2. CORS
+// 2. CORS — ✅ SPECIFIC ORIGINS ALLOW KARO
 app.use(
   cors({
-    origin: "*", // Adjust origins as appropriate for local testing
+    origin: [
+      "https://servire-frontend.vercel.app",  // ✅ Tumhara Vercel URL
+      "https://servire.vercel.app",            // ✅ Alternative
+      "http://localhost:5173",                 // ✅ Local development
+      "http://localhost:3000",                 // ✅ Local development
+      "https://servire-frontend-git-main.vercel.app", // ✅ Preview
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,  // ✅ Important for cookies/tokens
   })
 );
 
